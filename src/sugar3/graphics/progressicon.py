@@ -15,26 +15,45 @@
 # Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 # Boston, MA 02111-1307, USA.
 
+'''
+The progressicon module provide a progress icon; a widget with progress
+bar which shows progress of a task.
+'''
+
 from gi.repository import Gtk
 from sugar3.graphics.icon import get_surface
 from sugar3.graphics import style
 
 
 class ProgressIcon(Gtk.DrawingArea):
-    """Display the progress filling the icon.
+    '''
+    This class provides a wrapper based on :class:`Gtk.DrawingArea`,
+    and displays progress by filling an icon.
 
-    This class is compatible with the sugar3.graphics.icon.Icon class.
+    It is compatible with the sugar3.graphics.icon.Icon class.
 
-    Call update(progress) with the new progress to update the icon.
+    Call update(progress) with the new value to update the icon.
 
     The direction defaults to 'vertical', in which case the icon is
     filled from bottom to top.  If direction is set to 'horizontal',
     it will be filled from right to left or from left to right,
-    depending on the system's language RTL setting.
+    depending on the system's language right-to-left (RTL) setting.
 
-    """
+    '''
     def __init__(self, icon_name, pixel_size, stroke_color, fill_color,
                  direction='vertical'):
+        '''
+        Initializes the ProgressIcon class
+
+        (Hirshi1999, you might explain each parameter here)
+
+        Example:
+
+            icon = ProgressIcon(pixel_size=style.LARGE_ICON_SIZE,
+                                icon_name='computer-xo',
+                                stroke_color=style.COLOR_BUTTON_GREY.get_svg(),
+                                fill_color=style.COLOR_WHITE.get_svg())
+        '''
         Gtk.DrawingArea.__init__(self)
 
         self._icon_name = icon_name
@@ -95,5 +114,13 @@ class ProgressIcon(Gtk.DrawingArea):
         return (height, height)
 
     def update(self, progress):
+        '''
+        Update the displayed progress value.
+
+        The progress value should be a float ranging from 0 to 1.
+
+        Example:
+            update(0.5)
+        '''
         self._progress = progress
         self.queue_draw()
